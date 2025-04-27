@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clock with Mr. YellowFace</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            height: 100vh;
+            background-size: cover;
+            background-position: center;
+            transition: 0.5s ease-in;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #rect{
+            animation: fadein 5s;
+            padding: 40px;
+            background-color: rgba(0, 0, 0, 0.436);
+            border-radius: 10px;
+            font-family: sans-serif;
+            font-weight: bold;
+            color: white; 
+        }
+        #date{
+            text-align: center;
+            font-size: 20px;
+        }
+        #rect ul{
+            list-style: none;
+            display: flex;
+            font-size: 130px;
+            margin: 0px;
+        }
+        .emj{
+            position: absolute;
+            margin-left: 500px;
+            margin-top: -100px;
+        }
+        img{
+            pointer-events: none;
+            
+        }
+        #tx{
+            position: absolute;
+            margin-left: -10px;
+            margin-top: -120px;
+            height: 80px;
+            width: 150px;
+            text-align: right;
+            opacity: 0;
+            transition: 0.5s;
+        }
+        #tx:hover{
+            opacity: 1;
+            margin-left: 30px;
+        }
+        
+        @keyframes fadein{
+        from{opacity: 0;}
+        to{opacity: 1;}
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+       <div id="rect">
+            <div id="date"></div>
+            <ul>
+                <li id="hr"></li>
+                <li id="pnt">:</li>
+                <li id="min"></li>
+                <li id="pnt">:</li>
+                <li id="sec"></li>
+            </ul>
+            <div class="emj">
+                <img id="emoji" src="asleep.gif">
+                <div id="tx"><div>hi</div></div>
+            </div>
+        </div> 
+        
+    </div>
+    <script>
+        function clock(){
+            var monthn = ["January","Ferbuary","March","April","May","June","July","August","September","October","November","December"];
+            var dayn = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+            var today = new Date();
+            document.getElementById('date').innerHTML = (dayn[today.getDay()] + " " + today.getDate() + " " + monthn[today.getMonth()] + " " + today.getFullYear());
+
+            var h = today.getHours();
+            var m = today.getMinutes();
+            var s = today.getSeconds();
+            var day = h<11? 'AM': 'PM';
+
+            h = h<10? '0'+h: h;
+            m = m<10? '0'+m: m;
+            s = s<10? '0'+s: s;
+            document.getElementById('hr').innerHTML = (h);
+            document.getElementById('min').innerHTML = (m);
+            document.getElementById('sec').innerHTML = (s);
+        }var inter = setInterval(clock,400);
+    </script>
+    <script>
+        function setBackground() {
+            var now = new Date();
+            var hour = now.getHours();
+            var body = document.body;
+            
+
+            if (hour >= 6 && hour < 10) {
+                body.style.backgroundImage = "url('image1.jpg')";
+            } else if (hour >= 10 && hour < 18) {
+                body.style.backgroundImage = "url('image2.jpg')";
+            } else {
+                body.style.backgroundImage = "url('image3.jpg')";
+            }
+        }
+
+        // Set the background on page load
+        setBackground();
+        setInterval(setBackground, 400);
+
+        
+    </script>
+    <script>
+        function setTx() {
+            var now = new Date();
+            var hour = now.getHours();
+            var tx = document.getElementById('tx');
+            
+
+            if (hour >= 6 && hour < 10) {
+                tx.innerHTML = "Good Morning";
+            } else if (hour >= 10 && hour < 18) {
+                tx.innerHTML = "Have a good day";
+            } else if (hour >= 18 && hour < 22) {
+                tx.innerHTML = "I sleep at 10 PM";
+            } else {
+                tx.innerHTML = "ZZZ";;
+            }
+        }
+
+        // Set the background on page load
+        setTx();
+        setInterval(setTx, 400);
+
+        
+    </script>
+    <script>
+        function setEmoji() {
+
+            var now = new Date();
+            var hour = now.getHours();
+            var min = now.getMinutes();
+            var sc = now.getSeconds();
+            var ms = now.getMilliseconds();
+            var emoji = document.getElementById('emoji');
+
+            if (hour >= 6 && hour < 22) {
+                if (hour == 6 && min == 0 && sc == 0 && ms >= 0 && ms < 1000){
+                    emoji.src = 'wakeup.gif';
+                }
+                else {emoji.src = 'awake.png';}
+            } else {
+                if (hour == 22 && min == 0 && sc == 0 && ms >= 0 && ms < 1000){
+                    emoji.src = 'sleep.gif';
+                }
+                else {emoji.src = 'asleep.gif';}
+            }
+        }
+
+        setEmoji();
+        setInterval(setEmoji, 888);
+    </script>
+</body>
+</html>
